@@ -20,14 +20,10 @@ export function Navbar() {
 
             <ul className="nav-links">
                 <li>
-                    <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
-                        Home
-                    </Link>
+                    
                 </li>
                 <li>
-                    <Link to="/favoritos" className={location.pathname === '/favoritos' ? 'active' : ''}>
-                        Favoritos
-                    </Link>
+
                 </li>
             </ul>
 

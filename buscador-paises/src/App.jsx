@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import './App.css';
+import styles from './App.module.css';
 import { Home } from './pages/Home';
 import { CountryDetails } from './pages/CountryDetails';
 import { Favorites } from './pages/Favorites';
@@ -9,7 +9,7 @@ function App() {
     return (
         <Router>
             <Navbar />
-            <div className="container">
+            <div className={styles.container}>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/pais/:code" element={<CountryDetails />} />

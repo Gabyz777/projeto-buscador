@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import restCountriesApi from '../api/restcountries.js';
-import { CountryCard } from './components/CountryCard';
-import { useFavorites } from '../hooks/useFavorites';
-import { style } from './Home.module.css';
+import { CountryCard } from '../components/CountryCard.jsx';
+import { useFavorites } from '../hooks/useFavorites.js';
+import styles from './Home.module.css';
 
 const REGIONS = [
     { id: 'all', name: 'Todos', endpoint: '/all' },
-    { id: 'africa', name: 'África', endpoint: '/africa' },
-    { id: 'europa', name: 'Europa', endpoint: '/europa' },
-    { id: 'asia', name: 'Ásia', endpoint: '/asia' },
-    { id: 'americas', name: 'América', endpoint: '/americas' },
-    { id: 'oceania', name: 'Oceania', endpoint: '/oceania' },
+    { id: 'americas', name: 'América', endpoint: '/region/americas' },
+    { id: 'europe', name: 'Europa', endpoint: '/region/europe' },
+    { id: 'africa', name: 'África', endpoint: '/region/africa' },
+    { id: 'asia', name: 'Ásia', endpoint: '/region/asia' },
+    { id: 'oceania', name: 'Oceania', endpoint: '/region/oceania' }
 ];
 
 export function Home() {
@@ -20,12 +20,54 @@ export function Home() {
 
     const { isFavorite, toogleFavorite } = useFavorites();
 
-    useEffect
+      useEffect(() => {
+          const fetchCountries = async () => {
+              setLoading(true);
+              try {
+                  const response = await restCountriesApi.get(activeTab.endpoint);
+                  setCountries(response.data);
+              } catch (error) {
+                  console.error('Erro ao buscar países', error);
+              } finally {
+                  setLoading(false);
+              }
+          };
+
+          fetchCountries();
+      }, [activeTab]);
 
     return (
-        <div>
+        <div className="home-page">
+            <div className={styles.tabsContainer}>
+                {REGIONS.map((region) => (
+                    <button
+                        key={region.id}
+                        className={`${styles.tabBtn} ${activeTab.id === region.id ? styles.active : ''}`}
+                        onClick={() => setActiveTab(region)}>
+                        {region.name}
+                    </button>
+                ))}
+            </div>
 
-            .map
+            <h1 className={styles.title}>
+                Explorando: {activeTab.name}
+            </h1>
+
+            {loading ? (
+                <p className={styles.loadingText}>
+                    Carregando países...
+                </p>
+            ) : (
+                <div className={styles.grid}>
+                        {countries.map((country) => (
+                            <CountryCard
+                                key={country.cca3}
+                                country={country}
+                                isFavorite={isFavorite(country.cca3)}
+                                onToggleFavorite={toogleFavorite}
+                            />))}
+                </div>
+            )}
         </div>
-    );
+  );
 }

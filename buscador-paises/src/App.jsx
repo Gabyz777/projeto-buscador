@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import styles from './App.module.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { CountryDetails } from './pages/CountryDetails';
 import { Favorites } from './pages/Favorites';
+import { Navbar } from './components/Navbar';
+import styles from './App.module.css';
 
 function App() {
     return (
-        <Router>
+        <BrowserRouter>
             <Navbar />
             <div className={styles.container}>
                 <Routes>
@@ -16,7 +16,7 @@ function App() {
                     <Route path="/favoritos" element={<Favorites />} />
                 </Routes>
             </div>
-        </Router>
+        </BrowserRouter>
     );
 }
 

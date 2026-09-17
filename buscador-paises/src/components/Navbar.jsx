@@ -7,9 +7,8 @@ export function Navbar() {
     return (
         <nav className={styles['menu-nav']}>
             <div className={styles.logo}>
-                //Esse link é pra levar para a home
                 <Link to="/" className={styles['titulo-principal']}>
-                    GeoFlagger
+                    GeoFlagger🌍
                 </Link>
             </div>
 
